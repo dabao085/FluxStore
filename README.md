@@ -19,6 +19,12 @@ cd cmake-build
 cmake ..
 make
 ```
+## 使用配置文件  
+配置文件的路径是`src/conf/FluxStore.conf`, 使用时需要加上`--flagfile=src/conf/FluxStore.conf`选项，如下所示
+```shell
+[root@localhost cmake-build]# ./FluxStore upload Makefile --flagfile=src/conf/FluxStore.conf 
+```
+
 ## 使用方法-上传文件
 ```shell
 # 上传文件，将本地Makefile文件上传到FluxStore指定的存储路径，默认是/flux_store_data

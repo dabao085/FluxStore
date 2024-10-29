@@ -4,10 +4,11 @@
 #include <iostream>
 #include <memory>
 #include "file_system.h"
+#include "gflags/gflags.h"
 #include "local_file_system.h"
 
-const std::string kFluxStoreDataPath = "/flux_store_data";
-const std::string kFluxStoreJsonPath = "file_index.json";
+DECLARE_string(flux_store_data_path);
+DECLARE_string(flux_store_json_path);
 
 class FileIndex;
 
@@ -16,7 +17,7 @@ class FluxFileSystem : public FileSystem {
   FluxFileSystem()
       : file_index_(std::make_shared<FileIndexJson>()),
         fs_(std::make_shared<LocalFileSystem>(file_index_)),
-        mount_path_(kFluxStoreDataPath) {
+        mount_path_(FLAGS_flux_store_data_path) {
     if (mount_path_.back() != '/') {
       mount_path_.push_back('/');
     }
@@ -29,10 +30,12 @@ class FluxFileSystem : public FileSystem {
       }
     }
 
-    file_index_->LoadIndexFromFile(kFluxStoreJsonPath);
+    file_index_->LoadIndexFromFile(FLAGS_flux_store_json_path);
   }
 
-  ~FluxFileSystem() { file_index_->SaveIndexToFile(kFluxStoreJsonPath); }
+  ~FluxFileSystem() {
+    file_index_->SaveIndexToFile(FLAGS_flux_store_json_path);
+  }
 
   leveldb::Status ReadFile(const std::string& file_name,
                            std::string* data,
