@@ -1,36 +1,52 @@
+[中文版](README_cn.md)
 # FluxStore
-A small distributed file system    
-一个小型的分布式文件系统，用于技术验证和实验，以及练手。    
+## A small distributed file system    
+FluxStore is a lightweight distributed file system designed for technical validation, experiments, and practice.   
 
-## 开发进度
-- [x] Stage1: 实现单机文件存储    
-* - [x] 单机文件存储-顺序读   
-* - [x] 单机文件存储-覆盖写  
-* - [x] 单机文件存储-删除  
-* - [x] 单机文件索引(内存和持久化到Json文件)    
-- [ ] Stage2: 客户端-服务器架构  
-- [ ] Stage3: 多节点分布与控制节点  
-- [ ] Stage4: 数据冗余与容错  
+## Development Progress
+- [x] Stage1: Implement local file storage    
+* - [x] Local file storage - Sequential Read   
+* - [x] Local file storage - Overwrite Write  
+* - [x] Local file storage - Delete  
+* - [x] Local file indexing (in-memory and persisted to a JSON file)    
+- [ ] Stage2: Client-Server Architecture  
+- [ ] Stage3: Multi-node Distribution with Control Node  
+- [ ] Stage4: Data Redundancy and Fault Tolerance  
 
-## 编译方法
+## Build Instructions
 ```shell
 mkdir cmake-build
 cd cmake-build
 cmake ..
 make
 ```
-## 使用方法-上传文件
+## Using the Configuration File  
+The configuration file path is `src/conf/FluxStore.conf`, When running the program, include the `--flagfile=src/conf/FluxStore.conf` option, as shown below:
 ```shell
-# 上传文件，将本地Makefile文件上传到FluxStore指定的存储路径，默认是/flux_store_data
+[root@localhost cmake-build]# ./FluxStore upload Makefile --flagfile=src/conf/FluxStore.conf 
+```
+
+## Configuration File
+The configuration file is located at `src/conf/FluxStore.conf`, with the following content:  
+```shell
+--log_dir=/flux_store_log
+--flux_store_data_path=/flux_store_data
+--flux_store_json_path=file_index.json
+```
+`--log_dir` specifies the path for storing log files, `--flux_store_data_path` specifies the path for storing files in FluxStore, and `--flux_store_json_path` specifies the path for FluxStore's metadata file.les.
+
+## Usage - Uploading Files
+```shell
+# Upload a file. This uploads the local Makefile to the specified FluxStore storage path, which defaults to /flux_store_data.
 [root@localhost cmake-build]# ./FluxStore upload Makefile
 Hello FluxStore
 Uploading file: Makefile
-# 此时Makefile文件已经写入到/flux_store_data
+# At this point, the Makefile has been written to /flux_store_data.
 [root@localhost cmake-build]# ls -rlt /flux_store_data/
 total 12
 -rw-r--r--. 1 root root 11803 Sep 29 10:55 Makefile
 ```
-可以看到持久化的文件索引已经记录了Makefile的元数据信息  
+The persistent file index now records the metadata for the Makefile:  
 ```shell
 [root@localhost cmake-build]# cat file_index.json
 {
@@ -44,16 +60,16 @@ total 12
 }
 ```
 
-## 使用方法-下载文件
-注意Makefile是FluxStore里的文件名，./Makefile_bak是下载到本地的文件名
+## Usage - Downloading Files
+Note that Makefile is the filename in FluxStore, and ./Makefile_bak is the downloaded local filename.
 ```shell
 [root@localhost cmake-build]# ./FluxStore download Makefile ./Makefile_bak
 Hello FluxStore
 Downloading file: Makefile to ./Makefile_bak
 ```
 
-## 使用方法-删除文件
-可见从FluxStore里删除Makefile文件后，/flux_store_data和file_index.json都正确清理了数据和元数据
+## Usage - Deleting Files
+After deleting the Makefile from FluxStore, both /flux_store_data and file_index.json are cleaned up correctly, removing the file data and metadata.
 ```shell
 [root@localhost cmake-build]# ./FluxStore delete Makefile
 Hello FluxStore
