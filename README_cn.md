@@ -26,6 +26,15 @@ make
 [root@localhost cmake-build]# ./FluxStore upload Makefile --flagfile=src/conf/FluxStore.conf 
 ```
 
+## 配置文件
+配置文件的路径是`src/conf/FluxStore.conf`, 内容如下
+```shell
+--log_dir=/flux_store_log
+--flux_store_data_path=/flux_store_data
+--flux_store_json_path=file_index.json
+```
+`--log_dir`指定了文件的存储路径，`flux_store_data_path`指定了FluxStore存储文件的路径，`flux_store_json_path`指定了FluxStore的元数据文件路径
+
 ## 使用方法-上传文件
 ```shell
 # 上传文件，将本地Makefile文件上传到FluxStore指定的存储路径，默认是/flux_store_data

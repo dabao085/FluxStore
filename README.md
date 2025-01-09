@@ -26,6 +26,15 @@ The configuration file path is `src/conf/FluxStore.conf`, When running the progr
 [root@localhost cmake-build]# ./FluxStore upload Makefile --flagfile=src/conf/FluxStore.conf 
 ```
 
+## Configuration File
+The configuration file is located at `src/conf/FluxStore.conf`, with the following content:  
+```shell
+--log_dir=/flux_store_log
+--flux_store_data_path=/flux_store_data
+--flux_store_json_path=file_index.json
+```
+`--log_dir` specifies the path for storing log files, `--flux_store_data_path` specifies the path for storing files in FluxStore, and `--flux_store_json_path` specifies the path for FluxStore's metadata file.les.
+
 ## Usage - Uploading Files
 ```shell
 # Upload a file. This uploads the local Makefile to the specified FluxStore storage path, which defaults to /flux_store_data.
