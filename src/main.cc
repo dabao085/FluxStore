@@ -14,7 +14,10 @@ int main(int argc, char* argv[]) {
   google::InitGoogleLogging(argv[0]);
   LOG(ERROR) << "Hello FluxStore";
   FluxStoreCLI cli;
-  cli.run(argc, argv);
+  bool ret = cli.Run(argc, argv);
+  if (!ret) {
+    LOG(ERROR) << "Fail to run FluxStoreClI::Run";
+  }
 
   google::ShutdownGoogleLogging();
   return 0;

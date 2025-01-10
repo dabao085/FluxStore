@@ -2,6 +2,7 @@
 #include <sys/stat.h>
 #include <unistd.h>
 #include <iostream>
+#include "glog/logging.h"
 #include "store/status.h"
 
 leveldb::Status LocalFileSystem::ReadFile(const std::string& file_name,
@@ -53,7 +54,7 @@ leveldb::Status LocalFileSystem::CreateDir(const std::string& file_path) {
   } else {
     // 错误处理，根据errno返回相应的错误信息
     if (errno == EEXIST) {
-      std::cout << "Directory already exists: " + file_path << std::endl;
+      LOG(ERROR) << "Directory already exists: " + file_path;
       return leveldb::Status::OK();
     } else {
       return leveldb::Status::IOError("Failed to create directory: " +

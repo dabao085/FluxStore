@@ -1,5 +1,6 @@
 #include "store/flux_file_system.h"
 #include <unistd.h>
+#include "glog/logging.h"
 
 leveldb::Status FluxFileSystem::ReadFile(const std::string& file_name,
                                          std::string* data,
@@ -93,6 +94,6 @@ size_t FluxFileSystem::GetFileSize(const std::string& file_name) const {
     return metadata.file_size;
   }
 
-  std::cerr << "Fail to get file size, file=" << file_name << std::endl;
+  LOG(ERROR) << "Fail to get file size, file=" << file_name;
   return 0;
 }

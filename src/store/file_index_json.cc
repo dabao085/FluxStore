@@ -1,5 +1,6 @@
 #include "store/file_index_json.h"
 #include <iostream>
+#include "glog/logging.h"
 #include "json.hpp"
 
 void FileIndexJson::AddFile(const std::string& file_path,
@@ -86,7 +87,7 @@ void FileIndexJson::LoadIndexFromFile(const std::string& filename) {
         index_adapter_->SetIndex(file_path, metadata);
       }
     } else {
-      std::cerr << "Missing json file=" << filename << std::endl;
+      LOG(ERROR) << "Missing json file=" << filename;
     }
   }
 }
