@@ -13,13 +13,14 @@ class FluxStoreCLI {
         flux_fs_(std::make_shared<FluxFileSystem>()) {}
 
  public:
-  void upload(const std::string& file_path);
+  bool Run(int argc, char* argv[]);
 
-  void download(const std::string& file_path, const std::string& destination);
+ private:
+  bool Upload(const std::string& file_path);
 
-  void remove(const std::string& file_path);
+  bool Download(const std::string& file_path, const std::string& destination);
 
-  void run(int argc, char* argv[]);
+  bool Remove(const std::string& file_path);
 
  private:
   std::shared_ptr<LocalFileSystem> local_fs_;
